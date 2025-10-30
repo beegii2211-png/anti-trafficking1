@@ -14,6 +14,53 @@
             padding: 20px;
         }
 
+        /* ===== Login UI (шинэ нэмэлт) ===== */
+        .auth-wrap{
+            min-height: calc(100vh - 40px);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .auth-card{
+            width: 100%; max-width: 420px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+            padding: 28px;
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.5s ease;
+        }
+        .auth-card h2{
+            color:#4b57d1; text-align:center; margin-bottom: 12px;
+        }
+        .auth-card p.sub{
+            color:#555; text-align:center; margin-bottom: 16px;
+        }
+        .auth-field{
+            display:flex; flex-direction:column; gap:6px; margin-bottom: 14px;
+        }
+        .auth-field label{ color:#333; font-size: 0.95rem; }
+        .auth-field input{
+            padding: 12px 14px; border-radius: 12px; border: 1px solid #d6d6ff;
+            outline: none;
+        }
+        .auth-btn{
+            width:100%; padding: 12px 16px; border:0; border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color:#fff; cursor:pointer; font-weight:600; font-size:1rem;
+            transition: transform .15s ease, box-shadow .2s ease;
+            margin-top: 4px;
+        }
+        .auth-btn:hover{ transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+        .auth-note{
+            margin-top:12px; text-align:center; color:#666; font-size: 0.9rem;
+        }
+        .auth-error{
+            background: #ffe3e6; color:#b00020; border:1px solid #ffb3bd;
+            padding:10px 12px; border-radius:10px; margin-bottom:10px; display:none;
+        }
+
+        /* Контентыг анх нуухад хэрэглэнэ */
+        .hidden { display: none !important; }
+
         .container { max-width: 1200px; margin: 0 auto; }
 
         header {
@@ -101,10 +148,46 @@
             .card { padding: 20px; }
             .stat-number { font-size: 2em; }
         }
+
+        /* Logout товчийг толгойд жижигхэн байрлуулах (заавал биш) */
+        .topbar{
+            display:flex; justify-content:flex-end; margin-bottom:10px;
+        }
+        .logout-btn{
+            background: rgba(255,255,255,0.2); color:#fff; border:1px solid rgba(255,255,255,0.35);
+            padding:8px 12px; border-radius:10px; cursor:pointer;
+        }
+        .logout-btn:hover{ background: rgba(255,255,255,0.3); }
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <!-- Login дэлгэц үлдээнэ (хожим буцааж идэвхжүүлэх боломжтой), гэхдээ public үед харагдахгүй -->
+    <div id="auth" class="auth-wrap hidden">
+        <div class="auth-card">
+            <h2>Нэвтрэх</h2>
+            <p class="sub">Контент руу нэвтрэхийн тулд хэрэглэгчийн мэдээллээ оруулна уу.</p>
+            <div id="authError" class="auth-error">Нэвтрэх нэр эсвэл нууц үг буруу байна.</div>
+
+            <div class="auth-field">
+                <label for="username">Нэвтрэх нэр</label>
+                <input id="username" type="text" placeholder="Ж: admin" autocomplete="username">
+            </div>
+            <div class="auth-field">
+                <label for="password">Нууц үг</label>
+                <input id="password" type="password" placeholder="Ж: 1234" autocomplete="current-password">
+            </div>
+            <button class="auth-btn" id="loginBtn">Нэвтрэх</button>
+            <div class="auth-note">Демо нэвтрэх: <b>admin</b> / <b>1234</b></div>
+        </div>
+    </div>
+
+    <div id="topbar" class="topbar hidden">
+        <button class="logout-btn" id="logoutBtn">Гарах</button>
+    </div>
+
+    <!-- Танай контент (өөрчлөлтгүй) -->
+    <div id="protected" class="container hidden">
         <header>
             <h1>🛡️ Хүн худалдаалах гэмт хэргээс урьдчилан сэргийлэх</h1>
             <p class="tagline">Мэдлэг, боловсролоор нийгмээ хүчирхэгжүүлье</p>
@@ -203,7 +286,7 @@
                 <h3>1. Сэжигтэй тохиолдлыг мэдээлэх</h3>
                 <ul>
                     <li><strong>National Human Trafficking Hotline:</strong> 1-888-373-7888 (24/7)</li>
-                    <li><strong>Мессеж:</strong> 233733 ( "HELP" эсвэл "INFO" гэж бичнэ )</li>
+                    <li><strong>Мессеж:</strong> 233733 ("HELP" эсвэл "INFO" гэж бичнэ)</li>
                     <li><strong>Орон нутгийн цагдаа:</strong> Яаралтай тохиолдолд 911</li>
                     <li><strong>Онлайнаар:</strong> Албан ёсны вэбсайтуудаар мэдээлэх</li>
                 </ul>
@@ -219,7 +302,7 @@
                 <h3>3. Хохирогчдыг дэмжих</h3>
                 <ul>
                     <li>Хүн худалдаалахтай тэмцдэг ТББ-д сайн дурын ажил хий</li>
-                    <li>Нэр хүндтэй дэмжлэгийн сан, хөтөлбөрт хандив өгөх</                    li>
+                    <li>Нэр хүндтэй дэмжлэгийн сан, хөтөлбөрт хандив өгөх</li>
                     <li>Хууль эрх зүйн илүү хүчтэй зохицуулалтыг дэмжиж дуу хоолойгоо нэгтгэх</li>
                     <li>Ёс зүйтэй нийлүүлэлтийн сүлжээтэй бизнесийг дэмжих</li>
                 </ul>
@@ -333,6 +416,61 @@
     </div>
 
     <script>
+        // ==== Login control ====
+        const PUBLIC_MODE = true; // ← PUBLIC болгосон туг (true байхад login алгасна)
+        const AUTH_KEY = 'auth_ok_v1';
+        const DEFAULT_USER = 'admin';
+        const DEFAULT_PASS = '1234';
+
+        const auth = document.getElementById('auth');
+        const protectedEl = document.getElementById('protected');
+        const topbar = document.getElementById('topbar');
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const errBox = document.getElementById('authError');
+
+        function showProtected(){
+            auth.classList.add('hidden');
+            protectedEl.classList.remove('hidden');
+            topbar.classList.add('hidden'); // public үед logout-г нуух
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        function showLogin(){
+            protectedEl.classList.add('hidden');
+            topbar.classList.add('hidden');
+            auth.classList.remove('hidden');
+            errBox && (errBox.style.display = 'none');
+        }
+
+        // PUBLIC_MODE: шууд контентыг харуулна
+        if (PUBLIC_MODE) {
+            document.addEventListener('DOMContentLoaded', showProtected);
+        } else {
+            // Login шаардах горимд ажиллах логик
+            if(localStorage.getItem(AUTH_KEY)==='true'){
+                showProtected();
+            }else{
+                showLogin();
+            }
+
+            loginBtn?.addEventListener('click', () => {
+                const u = (document.getElementById('username').value || '').trim();
+                const p = (document.getElementById('password').value || '').trim();
+                if(u === DEFAULT_USER && p === DEFAULT_PASS){
+                    localStorage.setItem(AUTH_KEY, 'true');
+                    showProtected();
+                }else{
+                    errBox.style.display = 'block';
+                }
+            });
+
+            logoutBtn?.addEventListener('click', () => {
+                localStorage.removeItem(AUTH_KEY);
+                showLogin();
+            });
+        }
+
+        // ==== Танай анхны таб солих скрипт (өөрчлөлгүй) ====
         function showTab(tabId) {
             const sections = document.querySelectorAll('.content-section');
             const buttons = document.querySelectorAll('.tab-btn');
@@ -345,6 +483,7 @@
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+        window.showTab = showTab;
     </script>
 </body>
 </html>
