@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хүн Худалдаалах — Урьдчилан Сэргийлэх</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        h1 { font-size: 3em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .tagline { font-size: 1.2em; opacity: 0.9; }
+
+        .nav-tabs {
+            display: flex; justify-content: center; gap: 10px;
+            margin-bottom: 30px; flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.2); color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 12px 25px; border-radius: 25px; cursor: pointer;
+            font-size: 1em; transition: all 0.3s ease; backdrop-filter: blur(10px);
+        }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+        .tab-btn.active { background: white; color: #667eea; border-color: white; }
+
+        .content-section { display: none; animation: fadeIn 0.5s ease; }
+        .content-section.active { display: block; }
+
+        .card {
+            background: white; border-radius: 20px; padding: 30px; margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card h2 { color: #667eea; margin-bottom: 15px; font-size: 1.8em; }
+        .card h3 { color: #764ba2; margin: 20px 0 10px 0; font-size: 1.3em; }
+        .card p, .card li { color: #333; line-height: 1.8; margin-bottom: 10px; }
+        .card ul { margin-left: 20px; margin-bottom: 15px; }
+
+        .warning-box {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white; padding: 20px; border-radius: 15px; margin: 20px 0;
+        }
+        .info-box {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white; padding: 20px; border-radius: 15px; margin: 20px 0;
+        }
+        .success-box {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white; padding: 20px; border-radius: 15px; margin: 20px 0;
+        }
+
+        .grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px; margin: 20px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white; padding: 25px; border-radius: 15px; text-align: center;
+        }
+        .stat-number { font-size: 3em; font-weight: bold; margin-bottom: 10px; }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 15px 40px; border: none; border-radius: 30px;
+            font-size: 1.1em; cursor: pointer; transition: all 0.3s ease;
+            display: inline-block; margin: 10px; text-decoration: none;
+        }
+        .cta-button:hover { transform: scale(1.05); box-shadow: 0 5px 20px rgba(0,0,0,0.3); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        footer { text-align: center; color: white; margin-top: 50px; padding: 20px; opacity: 0.8; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2em; }
+            .card { padding: 20px; }
+            .stat-number { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Хүн худалдаалах гэмт хэргээс урьдчилан сэргийлэх</h1>
+            <p class="tagline">Мэдлэг, боловсролоор нийгмээ хүчирхэгжүүлье</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('awareness')">🔔 Мэдлэг</button>
+            <button class="tab-btn" onclick="showTab('signs')">👁️ Анхааруулах шинж</button>
+            <button class="tab-btn" onclick="showTab('action')">⚡ Арга хэмжээ</button>
+            <button class="tab-btn" onclick="showTab('resources')">📚 Нөөц</button>
+        </nav>
+
+        <div id="awareness" class="content-section active">
+            <div class="card">
+                <h2>Хүн худалдаалах гэмт хэргийг ойлгох нь</h2>
+                <p>Хүн худалдаалах гэмт хэрэг нь хүний эрхийн ноцтой зөрчил бөгөөд дэлхий даяар сая сая хүнд нөлөөлдөг. Энэ нь хүмүүсийг хүч, залилан, албадлагаар мөлжих—албадан хөдөлмөр, бэлгийн мөлжлөг, албадан боолчлол зэрэг зорилгоор ашиглахыг хэлнэ.</p>
+
+                <div class="grid">
+                    <div class="stat-card">
+                        <div class="stat-number">40M+</div>
+                        <p>Дэлхий даяарх орчин үеийн боолчлолд буй хүмүүс</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">71%</div>
+                        <p>Эмэгтэйчүүд ба охид</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1 of 4</div>
+                        <p>Хохирогчдын 1/4 нь хүүхэд</p>
+                    </div>
+                </div>
+
+                <h3>Хүн худалдаалах хэлбэрүүд</h3>
+                <ul>
+                    <li><strong>Бэлгийн мөлжлөг:</strong> Албадан биеэ үнэлэлт, порнографи, бэлгийн мөлжлөг</li>
+                    <li><strong>Хөдөлмөрийн мөлжлөг:</strong> Хөдөө аж ахуй, үйлдвэрлэл, гэрийн үйлчлэгч зэрэг салбарт албадан хөдөлмөр</li>
+                    <li><strong>Хүүхдийн худалдаа:</strong> Хүүхдийг хөдөлмөр, бэлгийн болон албадан гэмт хэрэгт ашиглах</li>
+                    <li><strong>Эрхтний хууль бус наймаа:</strong> Хүний эрхтнийг хууль бусаар худалдаалах</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Яагаад урьдчилан сэргийлэлт чухал вэ?</h2>
+                <div class="info-box">
+                    <h3>🎯 Урьдчилан сэргийлэхийн хүч</h3>
+                    <p>Урьдчилан сэргийлэлт нь хүн худалдаалах гэмт хэрэгтэй тэмцэх хамгийн үр дүнтэй арга. Нийгмийг сургаж, эмзэг бүлгийг тодорхойлж, хамгаалалтын сүлжээ бий болгосноор гэмт хэргийг гарахаас нь өмнө зогсоож чадна.</p>
+                </div>
+                <p>Үр дүнтэй сэргийлэлт нь боловсрол, эдийн засгийн чадавхжуулалт, хууль эрх зүйн хамгаалалт, олон нийтийн оролцоог хослуулсан иж бүрэн арга зүй шаарддаг.</p>
+            </div>
+        </div>
+
+        <div id="signs" class="content-section">
+            <div class="card">
+                <h2>Анхааруулах шинж тэмдгийг таних</h2>
+                <p>Болзошгүй хүн худалдаалах нөхцөлийг таньж чадвал хүний амь насыг аварч чадна. Дараах үзүүлэлтүүдэд анхаараарай:</p>
+
+                <div class="warning-box">
+                    <h3>⚠️ Хувь хүн дээр ажиглагдах шинж</h3>
+                    <ul>
+                        <li>Бие махбодын хүчирхийлэл, тэжээлийн дутагдал, туйлдаж ядарсан шинжтэй</li>
+                        <li>Чөлөөтэй зорчих боломжгүй, байнга хянагдаж байдаг</li>
+                        <li>Иргэний үнэмлэх зэрэг баримтаа өөрөө эзэмшдэггүй</li>
+                        <li>Айдас, түгшүүр, сэтгэл гутрал, хэт захирагдах байдал</li>
+                        <li>Нүд рүү харахаас зайлсхийх, хэлэх үгээ цээжилсэн мэт</li>
+                        <li>Хэт урт цагаар, бага эсвэл огт цалингүй ажиллах</li>
+                        <li>Хэт шахцалдсан, стандартын бус орчинд амьдрах</li>
+                    </ul>
+                </div>
+
+                <h3>Нөхцөл байдлын дохио</h3>
+                <ul>
+                    <li>Хэт сайхан санагдах ажил санал</li>
+                    <li>Ажил олгогч нь ажилтныхаа бичиг баримтыг хадгалдаг</li>
+                    <li>Өрийн боолчлолтой төстэй нөхцөл</li>
+                    <li>Бодит бус амлалттай сошиал элсүүлэлт</li>
+                    <li>Гэр бүл, олон нийтийн холбооноос тусгаарлах</li>
+                    <li>Орон байр, байршлаа байнга сольж өөрчлөх</li>
+                </ul>
+
+                <div class="info-box">
+                    <h3>💡 Зөн мэдрэхүйдээ итгэ</h3>
+                    <p>Ямар нэгэн зүйл буруу санагдвал ихэвчлэн үнэн байдаг. Мөлжлөг байж болзошгүй нөхцөл байдлыг бүү үл тоо.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="action" class="content-section">
+            <div class="card">
+                <h2>Та хэрхэн тусалж болох вэ</h2>
+
+                <div class="success-box">
+                    <h3>✅ Шуурхай алхмууд</h3>
+                    <p>Хэн нэгэн хүн худалдаалагдаж байна гэж сэжиглэвэл яаралтай, аюулгүй байдлаа ханган, арга хэмжээ ав.</p>
+                </div>
+
+                <h3>1. Сэжигтэй тохиолдлыг мэдээлэх</h3>
+                <ul>
+                    <li><strong>National Human Trafficking Hotline:</strong> 1-888-373-7888 (24/7)</li>
+                    <li><strong>Мессеж:</strong> 233733 ( "HELP" эсвэл "INFO" гэж бичнэ )</li>
+                    <li><strong>Орон нутгийн цагдаа:</strong> Яаралтай тохиолдолд 911</li>
+                    <li><strong>Онлайнаар:</strong> Албан ёсны вэбсайтуудаар мэдээлэх</li>
+                </ul>
+
+                <h3>2. Өөрийгөө болон бусдыг сургах</h3>
+                <ul>
+                    <li>Орон нутгийнхаа нөхцөл байдлын талаар судал</li>
+                    <li>Мэдээллийг хариуцлагатайгаар сошиалаар түгээ</li>
+                    <li>Сэрэмжлүүлэх арга хэмжээ, сургалт зохион байгуул</li>
+                    <li>Залуусыг онлайн аюулгүй хэрэглээнд сурга</li>
+                </ul>
+
+                <h3>3. Хохирогчдыг дэмжих</h3>
+                <ul>
+                    <li>Хүн худалдаалахтай тэмцдэг ТББ-д сайн дурын ажил хий</li>
+                    <li>Нэр хүндтэй дэмжлэгийн сан, хөтөлбөрт хандив өгөх</                    li>
+                    <li>Хууль эрх зүйн илүү хүчтэй зохицуулалтыг дэмжиж дуу хоолойгоо нэгтгэх</li>
+                    <li>Ёс зүйтэй нийлүүлэлтийн сүлжээтэй бизнесийг дэмжих</li>
+                </ul>
+
+                <h3>4. Өөрийгөө ба хамт олноо хамгаалах</h3>
+                <ul>
+                    <li>Урьдчилгаа төлбөр шаардах ажил саналд болгоомжтой ханд</li>
+                    <li>Ажил олголтыг албан ёсны шугамаар нягтал</li>
+                    <li>Хүүхдүүдэд үл таних хүн болон онлайн аюулгүй байдлын талаар заа</li>
+                    <li>Хөршийн харуул, хамтын хяналтын санаачилга бий болго</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h2>Урьдчилан сэргийлэх стратеги</h2>
+                <div class="grid">
+                    <div>
+                        <h3>Хувь хүнд</h3>
+                        <ul>
+                            <li>Эл нийтлэг арга, тактикуудыг судал</li>
+                            <li>Хувийн мэдээллээ онлайнаар хамгаал</li>
+                            <li>Бодит бус саналд эргэлзэж шалга</li>
+                            <li>Олон нийтийн сүлбээ, холбоогоо хадгал</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Олон нийтэд</h3>
+                        <ul>
+                            <li>Эмзэг бүлгийг дэмжих үйлчилгээ бий болгох</li>
+                            <li>Залуусын аюулгүй чөлөөт орон зайг нэмэгдүүлэх</li>
+                            <li>Боловсрол, сургалтын хөтөлбөр хэрэгжүүлэх</li>
+                            <li>Цагдаатай түншлэл, уялдаа холбоо бэхжүүлэх</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Байгууллагад</h3>
+                        <ul>
+                            <li>Нийлүүлэлтийн сүлжээнд албадан хөдөлмөр байгаа эсэхийг шалгах</li>
+                            <li>Ажилтнуудаа шинж тэмдгийг таних сургалтад хамруулах</li>
+                            <li>Ёс зүйтэй, ил тод ажилд авах бодлого мөрдөх</li>
+                            <li>Тэмцлийн санаачилгыг дэмжих, хамтран ажиллах</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="resources" class="content-section">
+            <div class="card">
+                <h2>Чухал нөөц</h2>
+
+                <h3>🆘 Яаралтай холбоо</h3>
+                <div class="warning-box">
+                    <ul>
+                        <li><strong>National Human Trafficking Hotline:</strong> 1-888-373-7888</li>
+                        <li><strong>Яаралтай тусламж:</strong> 911</li>
+                        <li><strong>Мессеж:</strong> "HELP" гэж 233733 дугаарт бичих</li>
+                    </ul>
+                </div>
+
+                <h3>🌐 Онлайн нөөц</h3>
+                <ul>
+                    <li><strong>Polaris Project:</strong> polarisproject.org — Мэдээлэл ба мэдээлэх сувгууд</li>
+                    <li><strong>НҮБ-ын Мансууруулах бодис, Гэмт хэрэгтэй тэмцэх газар (UNODC):</strong> unodc.org — Дэлхийн мэдээлэл, тайлан</li>
+                    <li><strong>АНУ-ын Төрийн департамент:</strong> state.gov/trafficking — Жилийн тайлан</li>
+                    <li><strong>ОУХБ (ILO):</strong> ilo.org — Албадан хөдөлмөрийн талаарх мэдээлэл</li>
+                </ul>
+
+                <h3>📱 Гар утасны апп</h3>
+                <ul>
+                    <li><strong>TraffickCam:</strong> Зочид буудлын өрөөний зургийг нийтэлж илрүүлэхэд тусална</li>
+                    <li><strong>Truckers Against Trafficking:</strong> Тээвэр ложистикийн салбарын ажилтнуудад</li>
+                </ul>
+
+                <h3>📖 Сургалтын материал</h3>
+                <ul>
+                    <li>Сургалтын видео, вебинарууд</li>
+                    <li>Товхимол, постер татаж авах</li>
+                    <li>Нийтийн танилцуулгын загварууд</li>
+                    <li>Залуусын боловсролын хөтөлбөрүүд</li>
+                </ul>
+
+                <div class="success-box">
+                    <h3>🤝 Оролцъё</h3>
+                    <p>Хандив өгөх, сайн дурын ажил хийх, бодлого advocating хийх зэргээр тэмцэлд нэгдэцгээе. Таны үйлдэл бүр үнэ цэнтэй!</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Нэмэлт дэмжлэгийн үйлчилгээ</h2>
+                <ul>
+                    <li><strong>Хуулийн туслалцаа:</strong> Хохирогчдод үнэ төлбөргүй эрх зүйн тусламж</li>
+                    <li><strong>Сэтгэл санааны дэмжлэг:</strong> Гэмтлийн мэдрэмжид суурилсан зөвлөгөө, эмчилгээ</li>
+                    <li><strong>Орон байр:</strong> Аюулгүй түр болон дамжин суурьших байр</li>
+                    <li><strong>Ажил мэргэжлийн сургалт:</strong> Ур чадвар хөгжүүлэх, ажилд зуучлах хөтөлбөр</li>
+                    <li><strong>Эрүүл мэндийн тусламж:</strong> Эмчилгээ, шүдний тусламж үйлчилгээ</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#" class="cta-button" onclick="showTab('action'); return false;">Одоо арга хэмжээ ав</a>
+            <a href="#" class="cta-button" onclick="alert('Яаралтай: 1-888-373-7888 дугаарт залгана уу'); return false;">Хүн худалдаалах хэргийг мэдээлэх</a>
+        </div>
+
+        <footer>
+            <p>Хамтдаа хүн худалдаалах гэмт хэргийг зогсооё.</p>
+            <p>Та эсвэл танил хэн нэгэнд тусламж хэрэгтэй бол: National Human Trafficking Hotline — 1-888-373-7888</p>
+            <p style="margin-top: 20px; font-size: 0.9em;">© 2025 Хүн Худалдаалахтай Тэмцэх Санаачилга</p>
+        </footer>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            const sections = document.querySelectorAll('.content-section');
+            const buttons = document.querySelectorAll('.tab-btn');
+
+            sections.forEach(section => { section.classList.remove('active'); });
+            buttons.forEach(button => { button.classList.remove('active'); });
+
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
